@@ -21,15 +21,10 @@ module.exports = class Request {
             })
             .on('end', () => {
               const stringifiedReponse = items.join('');
-              // if (!stringifiedReponse.length) { // precisa criar um teste pra esse path (branch no coverage)
-              //   throw new Error(
-              //     JSON.stringify({
-              //       error: true,
-              //       message: 'Received empty response',
-              //     })
-              //   );
-              // }
-              resolve(JSON.parse(stringifiedReponse));
+              const response = stringifiedReponse.length
+                ? JSON.parse(stringifiedReponse)
+                : stringifiedReponse;
+              resolve(response);
             });
         })
         .on('error', reject);

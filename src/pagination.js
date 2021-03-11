@@ -48,7 +48,7 @@ module.exports = class Pagination {
 
   /*
     Generators sao usados pra trabalhar com dados sob demanda
-    precisamos anotas a funcao com * e usar o yield para retornar dados sob demanda
+    precisamos anotar a funcao com * e usar o yield para retornar dados sob demanda
     quando usamos o yield { 0 }
 
     O retorno pode ser { done: false, value: 0 }
@@ -66,7 +66,7 @@ module.exports = class Pagination {
     // CUIDADO, mais de 1M de requisicoes
     if (lastId === 0) return ['result'];
 
-    yield result;
+    yield result; // retorna o resultado, mas salva o estado da função. Quando executar getPaginated.next() de novo, vai continuar a partir daqui
     await Pagination.sleep(this.threshold);
     yield* this.getPaginated({ url, page: lastId });
   }
